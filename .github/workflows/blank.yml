@@ -8,22 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: send coverage
-        working-directory: ${{ github.workspace }}
-        run: bash ./get.sh report -t ${{ secrets.CODACY_PROJECT_TOKEN }}
-  Run-coverage-on-macos:
-    name: Run coverage macos
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: send coverage
-        working-directory: ${{ github.workspace }}
-        run: bash ./get.sh report -t ${{ secrets.CODACY_PROJECT_TOKEN }}
-  Run-coverage-on-windows:
-    name: Run coverage windows
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: send coverage
-        working-directory: ${{ github.workspace }}
-        run: bash ./get.sh report -t ${{ secrets.CODACY_PROJECT_TOKEN }}
+      - name: Run codacy coverage reporter
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: src.lcov
+
